@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Teri</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://unpkg.com/98.css" />
+    <link rel="stylesheet" href="main.css" />
+    <script type="text/javascript" src="main.js"></script>
+  </head>
+
+  <body>
+    <div class="window" style="margin: 32px; width: 250px">
+      <div class="title-bar">
+        <div class="title-bar-text">My First VB4 Program</div>
+      </div>
+      <div class="window-body">
+        <p>Hello, world!</p>
+      </div>
+    </div>
+
+    <div id="aboout-wrapper" style="position: relative">
+      <div style="position: absolute; top: -11px; z-index: -1">
+        <label>click to escape</label>
+        <button disabled>escape</button>
+      </div>
+      <div class="window" id="about" style="margin: 32px; width: 400px">
+        <div class="title-bar" id="about-title-bar">
+          <div class="title-bar-text">About</div>
+
+          <div class="title-bar-controls">
+            <button id="about-min" aria-label="Minimize"></button>
+            <button id="about-max" aria-label="Maximize"></button>
+            <button id="about-close" aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body" id="about-body">
+          <p>
+            Teri Ke studies Art History at Bryn Mawr College and Computer
+            Graphics at the University of Pennsylvania. Here, you can find their
+            projects and things they want to share with the www.
+          </p>
+          <section class="field-row" style="justify-content: flex-end">
+            <button id="about-ok">OK</button>
+            <button id="about-cancel">Cancel</button>
+          </section>
+        </div>
+      </div>
+      <div
+        class="window"
+        id="are-u-sure"
+        style="
+          margin: 32px;
+          width: 400px;
+          display: none;
+          position: absolute;
+          top: 50px;
+          left: 50px;
+        "
+      >
+        <div class="title-bar">
+          <div class="title-bar-text">WARNING!</div>
+
+          <div class="title-bar-controls">
+            <button disabled aria-label="Minimize"></button>
+            <button disabled aria-label="Maximize"></button>
+            <button disabled aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <p>Are you sure you want to destroy the window?</p>
+          <section class="field-row" style="justify-content: flex-end">
+            <button disabled id="sure-ok">OK</button>
+            <button disabled id="sure-cancel">Cancel</button>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div
+      class="window"
+      style="
+        width: auto;
+        position: absolute;
+        left: 50px;
+        bottom: 30px;
+        z-index: -1;
+      "
+    >
+      <div class="status-bar">
+        <p class="status-bar-field">Press F1 for help</p>
+        <p class="status-bar-field">Last Updated: 01/27/24</p>
+        <p class="status-bar-field">CPU Usage: ??%</p>
+      </div>
+    </div>
+
+    <div id="table" style="">
+      <div
+        class="sunken-panel"
+        style="
+          height: 264px;
+          width: 320px;
+          position: absolute;
+          right: 80px;
+          top: 60px;
+        "
+      >
+        <table class="interactive">
+          <thead>
+            <tr>
+              <th>Project Name</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              onclick="window.open('https://nearestthreshold.bandcamp.com/album/peregrine-01');"
+            >
+              <td>Peregrine 01</td>
+              <td>Music</td>
+              <td>01/18/24</td>
+              <td>
+                An ambient album recorded in the aftermath of the Peregrine
+                Mission
+              </td>
+            </tr>
+            <tr onclick="window.open('https://github.com/teriyake/goo');">
+              <td>Goo</td>
+              <td>Software</td>
+              <td>01/18/24</td>
+              <td>
+                A functional programming language inspired by and written in Go
+              </td>
+            </tr>
+            <tr
+              onclick="window.open('https://github.com/teriyake/solar-wind-music');"
+            >
+              <td>Solar Wind Music</td>
+              <td>Software</td>
+              <td>09/23/22</td>
+              <td>
+                A pure data patch that generates ambient sounds using real-time
+                solar wind data
+              </td>
+            </tr>
+            <tr onclick="window.open('https://github.com/teriyake/GOMM');">
+              <td>G.O.M.M.</td>
+              <td>Typography</td>
+              <td>04/15/22</td>
+              <td>A serif Latin typeface</td>
+            </tr>
+            <tr>
+              <td>more coming soon...</td>
+              <td>??</td>
+              <td>??/??/??</td>
+              <td>... after I've sorted through my archives...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script>
+      document.querySelectorAll("table.interactive").forEach((element) => {
+        element.addEventListener("click", (event) => {
+          const row = event.path.find(
+            (element) =>
+              element.tagName === "TR" &&
+              element.parentElement.tagName === "TBODY",
+          );
+          if (row) {
+            row.classList.toggle("highlighted");
+          }
+        });
+      });
+    </script>
+    <div
+      class="window"
+      id="window-window"
+      style="
+        margin: 32px;
+        width: 250px;
+        position: absolute;
+        top: 300px;
+        left: 200px;
+      "
+    >
+      <div class="title-bar">
+        <div class="title-bar-text">Would You Like to Open A Window?</div>
+      </div>
+      <div class="window-body">
+        <section class="field-row" style="justify-content: flex">
+          <button id="window-ok" onclick="unhideWindow()">Yes</button>
+          <button id="window-cancel">No</button>
+        </section>
+      </div>
+    </div>
+
+    <div
+      class="window"
+      id="real-window"
+      style="
+        width: 98vw;
+        height: 97vh;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        visibility: hidden;
+      "
+    >
+      <div class="title-bar">
+        <div class="title-bar-text">A Window With A Window In It</div>
+        <div class="title-bar-controls">
+          <button disabled aria-label="Minimize"></button>
+          <button disabled aria-label="Maximize"></button>
+          <button aria-label="Close" onclick="hideWindow()"></button>
+        </div>
+      </div>
+      <div class="window-body" style="overflow-y: hidden">
+        <div
+          id="curtain"
+          style="
+            z-index: 99999;
+            width: 92vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            display: none;
+          "
+        ></div>
+        <video
+          id="clouds"
+          class="video-js"
+          height="85vh"
+          width="85vw"
+          autoplay
+          data-setup='{"controls": false, "muted": true, "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=P9C25Un7xaM"}], "youtube": { "ytControls": 0, "playsinline": 1, "disablekb": 1, "iv_load_policy": 3, "loop": 1} }'
+        ></video>
+      </div>
+    </div>
+
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/3.0.1/Youtube.min.js"
+      integrity="sha512-W11MwS4c4ZsiIeMchCx7OtlWx7yQccsPpw2dE94AEsZOa3pmSMbrcFjJ2J7qBSHjnYKe6yRuROHCUHsx8mGmhA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </body>
+</html>

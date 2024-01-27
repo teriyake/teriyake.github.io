@@ -1,0 +1,42 @@
+body {
+  background-color: #008080;
+  overflow: scroll;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari, Chrome, Opera, Samsung */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Edge, IE */
+  user-select: none; /* Modern browsers */
+  /*cursor: url('q.png'), auto;*/
+}
+/*
+.title-bar {
+    cursor: default !important;
+}
+.window-body {
+    cursor: default !important;
+}
+*/
+p.status-bar-field {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.vjs-modal-dialog .vjs-hidden .vjs-text-track-settings {
+  display: none !important;
+}
+
+.vjs-youtube {
+  position: relative;
+  padding-bottom: 75vh;
+  padding-left: 65vw;
+  height: 0;
+  overflow: hidden;
+}
+
+.vjs-youtube iframe {
+  position: absolute;
+  top: -20;
+  left: 0;
+  width: 90vw !important;
+  height: 100%;
+}
