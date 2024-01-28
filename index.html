@@ -23,7 +23,7 @@
         <label>click to escape</label>
         <button disabled>escape</button>
       </div>
-      <div class="window" id="about" style="margin: 32px; width: 400px">
+      <div class="window" id="about" style="margin: 32px; width: 480px">
         <div class="title-bar" id="about-title-bar">
           <div class="title-bar-text">About</div>
 
@@ -35,10 +35,12 @@
         </div>
         <div class="window-body" id="about-body">
           <p>
-            Teri Ke studies Art History at Bryn Mawr College and Computer
-            Graphics at the University of Pennsylvania. Here, you can find their
-            projects and things they want to share with the www.
+            Teri is making (breaking) things...
+            </p>
+            <p>
+            Here, you can find some of their projects and things they want to share with the www.
           </p>
+          <br>
           <section class="field-row" style="justify-content: flex-end">
             <button id="about-ok">OK</button>
             <button id="about-cancel">Cancel</button>
@@ -80,8 +82,8 @@
       style="
         width: auto;
         position: absolute;
-        left: 50px;
-        bottom: 30px;
+        right: 320px;
+        bottom: 160px;
         z-index: -1;
       "
     >
@@ -89,6 +91,23 @@
         <p class="status-bar-field">Press F1 for help</p>
         <p class="status-bar-field">Last Updated: 01/27/24</p>
         <p class="status-bar-field">CPU Usage: ??%</p>
+      </div>
+    </div>
+    <div
+      class="window"
+      style="
+        width: auto;
+        position: absolute;
+        left: 50px;
+        bottom: 30px;
+        z-index: -1;
+      "
+    >
+      <div class="status-bar">
+          <a target="_blank" href="https://github.com/teriyake"><p class="status-bar-field">Github</p></a>
+          <a href="#"><p class="status-bar-field">CV</p></a>
+          <a target="_blank" href="https://www.linkedin.com/in/teri-ke"><p class="status-bar-field">LinkedIn</p></a>
+          <a href="mailto:tke@brynmawr.edu"><p class="status-bar-field">Email</p></a>
       </div>
     </div>
 
@@ -234,7 +253,7 @@
           height="85vh"
           width="85vw"
           autoplay
-          data-setup='{"controls": false, "muted": true, "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=P9C25Un7xaM"}], "youtube": { "ytControls": 0, "playsinline": 1, "disablekb": 1, "iv_load_policy": 3, "loop": 1} }'
+          data-setup='{"controls": false, "muted": true, "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=P9C25Un7xaM"}], "youtube": { "ytControls": 0, "playsinline": 1, "disablekb": 1, "iv_load_policy": 3, "loop": 1, "start": 35220, "end": "38820"} }'
         ></video>
       </div>
     </div>

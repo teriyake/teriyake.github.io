@@ -17,6 +17,11 @@ body {
     cursor: default !important;
 }
 */
+    a {
+
+  text-decoration: none !important;
+  color: #222222 !important;
+    }
 p.status-bar-field {
   padding-left: 12px;
   padding-right: 12px;
