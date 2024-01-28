@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (volSlider.value % 2 == rand % 2) {
       document.getElementById("error-1").style.display = "block";
       document.getElementById("error-2").style.display = "block";
+      volSlider.setAttribute("disabled", "disabled");
     }
   };
 
