@@ -108,13 +108,13 @@
         <p class="status-bar-field"></p>
         <p class="status-bar-field">Press F1 for help</p>
         <div class="field-row status-bar-field" style="width: 300px">
-          <label for="range25"
+          <label for="vol"
             ><img src="sndvol32_main.ico" height="12" style="margin-left: 5px"
           /></label>
-          <label for="range25">Volume:</label>
-          <label for="range26">Low</label>
-          <input id="range26" type="range" min="1" max="11" value="5" />
-          <label for="range27">High</label>
+          <label for="vol">Volume:</label>
+          <label for="vol">Low</label>
+          <input id="vol" type="range" min="0" max="10" value="0" />
+          <label for="vol">High</label>
         </div>
         <p class="status-bar-field">CPU Usage: ??%</p>
       </div>
@@ -257,6 +257,68 @@
 
     <div
       class="window"
+      id="error-1"
+      style="
+        margin: 32px;
+        width: 350px;
+        display: none;
+        position: absolute;
+        top: 295px;
+        left: 680px;
+        z-index: 998;
+      "
+    >
+      <div class="title-bar">
+        <div class="title-bar-text"></div>
+
+        <div class="title-bar-controls"></div>
+      </div>
+      <div class="window-body">
+        <div class="with-icon">
+          <span><img src="msg_error.ico" /></span>
+          <p></p>
+        </div>
+        <section class="field-row" style="justify-content: flex-end">
+          <button disabled><br /></button>
+        </section>
+      </div>
+    </div>
+
+    <div
+      class="window"
+      id="error-2"
+      style="
+        margin: 32px;
+        width: 350px;
+        display: none;
+        position: absolute;
+        top: 355px;
+        left: 580px;
+        z-index: 998;
+      "
+    >
+      <div class="title-bar">
+        <div class="title-bar-text">Error Error</div>
+
+        <div class="title-bar-controls">
+          <button disabled aria-label="Minimize"></button>
+          <button disabled aria-label="Maximize"></button>
+          <button disabled aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="with-icon">
+          <span><img src="msg_error.ico" /></span>
+          <p>There was a critical error displaying the previous error.</p>
+        </div>
+        <section class="field-row" style="justify-content: flex-end">
+          <button disabled>Help</button>
+        </section>
+      </div>
+    </div>
+
+    <div
+      class="window"
       id="projects-error"
       style="
         margin: 32px;
@@ -283,8 +345,7 @@
           <p>An unknown error has occured.</p>
         </div>
         <section class="field-row" style="justify-content: flex-end">
-          <button disabled>OK</button>
-          <button disabled>Cancel</button>
+          <button disabled>Help</button>
         </section>
       </div>
     </div>
@@ -368,20 +429,43 @@
         </div>
       </div>
     </div>
-    <script>
-      document.querySelectorAll("table.interactive").forEach((element) => {
-        element.addEventListener("click", (event) => {
-          const row = event.path.find(
-            (element) =>
-              element.tagName === "TR" &&
-              element.parentElement.tagName === "TBODY",
-          );
-          if (row) {
-            row.classList.toggle("highlighted");
-          }
-        });
-      });
-    </script>
+
+    <div
+      class="window"
+      id="complaint"
+      style="
+        margin: 32px;
+        width: 350px;
+        display: none;
+        position: absolute;
+        top: 245px;
+        left: 390px;
+        z-index: 999;
+      "
+    >
+      <div class="title-bar">
+        <div class="title-bar-text">?</div>
+
+        <div class="title-bar-controls">
+          <button disabled aria-label="Minimize"></button>
+          <button disabled aria-label="Maximize"></button>
+          <button disabled aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="with-icon">
+          <span><img src="computer_search.ico" /></span>
+          <p>What would you like the computer to do?</p>
+        </div>
+        <section class="field-row" style="justify-content: flex-end">
+          <div class="field-row">
+            <input disabled type="text" value="Type here" />
+          </div>
+          <button disabled>Enter</button>
+        </section>
+      </div>
+    </div>
+
     <div
       class="window"
       id="window-window"
@@ -400,7 +484,7 @@
       <div class="window-body">
         <section class="field-row" style="justify-content: flex">
           <button id="window-ok" onclick="unhideWindow()">Yes</button>
-          <button id="window-cancel">No</button>
+          <button id="window-no" onclick="complain()">No</button>
         </section>
       </div>
     </div>

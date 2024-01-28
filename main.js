@@ -8,6 +8,13 @@ function hideWindow() {
   w.style.visibility = "hidden";
 }
 
+function complain() {
+  var c = document.getElementById("complaint");
+  c.style.display = "block";
+  var w = document.getElementById("window-no");
+  w.setAttribute("disabled", "disabled");
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("curtain").style.display = "block";
   document.getElementById("about-min").addEventListener("click", function (e) {
@@ -61,6 +68,14 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     document.getElementById("real-window").style.display = "block";
   });
+  var volSlider = document.getElementById("vol");
+  volSlider.onchange = function () {
+    var rand = Math.floor(Math.random() * 11);
+    if (volSlider.value % 2 == rand % 2) {
+      document.getElementById("error-1").style.display = "block";
+      document.getElementById("error-2").style.display = "block";
+    }
+  };
 
   setTimeout(() => {
     const win = document.getElementById("window-window");
