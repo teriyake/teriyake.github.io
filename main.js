@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     document.getElementById("real-window").style.display = "block";
   });
+
   setTimeout(() => {
     const win = document.getElementById("window-window");
     win.style.visibility = "hidden";

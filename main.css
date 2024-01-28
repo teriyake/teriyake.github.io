@@ -17,15 +17,22 @@ body {
     cursor: default !important;
 }
 */
-    a {
-
+a {
   text-decoration: none !important;
   color: #222222 !important;
-    }
+}
 p.status-bar-field {
   padding-left: 12px;
   padding-right: 12px;
 }
+
+#projects tr:hover {
+  background: #000080 !important;
+  color: #fefefe !important;
+  outline: 1px dotted #fefefe;
+  outline-offset: -1px;
+}
+
 .vjs-modal-dialog .vjs-hidden .vjs-text-track-settings {
   display: none !important;
 }

@@ -34,13 +34,12 @@
           </div>
         </div>
         <div class="window-body" id="about-body">
+          <p>Teri is making (breaking) things...</p>
           <p>
-            Teri is making (breaking) things...
-            </p>
-            <p>
-            Here, you can find some of their projects and things they want to share with the www.
+            Here, you can find some of their projects and things they want to
+            share with the www.
           </p>
-          <br>
+          <br />
           <section class="field-row" style="justify-content: flex-end">
             <button id="about-ok">OK</button>
             <button id="about-cancel">Cancel</button>
@@ -104,78 +103,119 @@
       "
     >
       <div class="status-bar">
-          <a target="_blank" href="https://github.com/teriyake"><p class="status-bar-field">Github</p></a>
-          <a href="#"><p class="status-bar-field">CV</p></a>
-          <a target="_blank" href="https://www.linkedin.com/in/teri-ke"><p class="status-bar-field">LinkedIn</p></a>
-          <a href="mailto:tke@brynmawr.edu"><p class="status-bar-field">Email</p></a>
+        <a target="_blank" href="https://github.com/teriyake"
+          ><p class="status-bar-field">Github</p></a
+        >
+        <a href="#"><p class="status-bar-field">CV</p></a>
+        <a target="_blank" href="https://www.linkedin.com/in/teri-ke"
+          ><p class="status-bar-field">LinkedIn</p></a
+        >
+        <a href="mailto:tke@brynmawr.edu"
+          ><p class="status-bar-field">Email</p></a
+        >
       </div>
     </div>
 
-    <div id="table" style="">
-      <div
-        class="sunken-panel"
-        style="
-          height: 264px;
-          width: 320px;
-          position: absolute;
-          right: 80px;
-          top: 60px;
-        "
-      >
-        <table class="interactive">
-          <thead>
-            <tr>
-              <th>Project Name</th>
-              <th>Type</th>
-              <th>Date</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              onclick="window.open('https://nearestthreshold.bandcamp.com/album/peregrine-01');"
-            >
-              <td>Peregrine 01</td>
-              <td>Music</td>
-              <td>01/18/24</td>
-              <td>
-                An ambient album recorded in the aftermath of the Peregrine
-                Mission
-              </td>
-            </tr>
-            <tr onclick="window.open('https://github.com/teriyake/goo');">
-              <td>Goo</td>
-              <td>Software</td>
-              <td>01/18/24</td>
-              <td>
-                A functional programming language inspired by and written in Go
-              </td>
-            </tr>
-            <tr
-              onclick="window.open('https://github.com/teriyake/solar-wind-music');"
-            >
-              <td>Solar Wind Music</td>
-              <td>Software</td>
-              <td>09/23/22</td>
-              <td>
-                A pure data patch that generates ambient sounds using real-time
-                solar wind data
-              </td>
-            </tr>
-            <tr onclick="window.open('https://github.com/teriyake/GOMM');">
-              <td>G.O.M.M.</td>
-              <td>Typography</td>
-              <td>04/15/22</td>
-              <td>A serif Latin typeface</td>
-            </tr>
-            <tr>
-              <td>more coming soon...</td>
-              <td>??</td>
-              <td>??/??/??</td>
-              <td>... after I've sorted through my archives...</td>
-            </tr>
-          </tbody>
-        </table>
+    <div
+      class="window"
+      style="width: 110px; position: absolute; top: 360px; left: 280px"
+    >
+      <div class="title-bar">
+        <div class="title-bar-text">Cow</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="field-row">
+          <label for="cow">Moo</label>
+          <label for="cow">ooo</label>
+          <div class="is-vertical">
+            <input
+              id="cow"
+              class="has-box-indicator"
+              type="range"
+              min="0"
+              max="11"
+              step="1"
+              value="2"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="window" style="position: absolute; right: 80px; top: 60px">
+      <div class="title-bar">
+        <div class="title-bar-text">Projects</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+
+      <div class="window-body">
+        <div id="table" style="">
+          <div class="sunken-panel" style="height: 264px; width: 320px">
+            <table class="interactive">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Date</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody id="projects">
+                <tr
+                  onclick="window.open('https://nearestthreshold.bandcamp.com/album/peregrine-01');"
+                >
+                  <td>Peregrine 01</td>
+                  <td>Music</td>
+                  <td>01/18/24</td>
+                  <td>
+                    An ambient album recorded in the aftermath of the Peregrine
+                    Mission
+                  </td>
+                </tr>
+                <tr onclick="window.open('https://github.com/teriyake/goo');">
+                  <td>Goo</td>
+                  <td>Software</td>
+                  <td>01/18/24</td>
+                  <td>
+                    A functional programming language inspired by and written in
+                    Go
+                  </td>
+                </tr>
+                <tr
+                  onclick="window.open('https://github.com/teriyake/solar-wind-music');"
+                >
+                  <td>Solar Wind Music</td>
+                  <td>Software</td>
+                  <td>09/23/22</td>
+                  <td>
+                    A pure data patch that generates ambient sounds using
+                    real-time solar wind data
+                  </td>
+                </tr>
+                <tr onclick="window.open('https://github.com/teriyake/GOMM');">
+                  <td>G.O.M.M.</td>
+                  <td>Typography</td>
+                  <td>04/15/22</td>
+                  <td>A serif Latin typeface</td>
+                </tr>
+                <tr>
+                  <td>more coming soon...</td>
+                  <td>??</td>
+                  <td>??/??/??</td>
+                  <td>... after I've sorted through my archives...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
     <script>
