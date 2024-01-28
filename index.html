@@ -9,7 +9,10 @@
   </head>
 
   <body>
-    <div class="window" style="margin: 32px; width: 250px">
+    <div
+      class="window"
+      style="margin: 32px; width: 250px; margin-left: 390px !important"
+    >
       <div class="title-bar">
         <div class="title-bar-text">My First VB4 Program</div>
       </div>
@@ -59,7 +62,7 @@
         "
       >
         <div class="title-bar">
-          <div class="title-bar-text">WARNING!</div>
+          <div class="title-bar-text">Question</div>
 
           <div class="title-bar-controls">
             <button disabled aria-label="Minimize"></button>
@@ -68,7 +71,10 @@
           </div>
         </div>
         <div class="window-body">
-          <p>Are you sure you want to destroy the window?</p>
+          <div class="with-icon">
+            <span><img src="msg_question.ico" /></span>
+            <p>Are you sure you want to destroy the window?</p>
+          </div>
           <section class="field-row" style="justify-content: flex-end">
             <button disabled id="sure-ok">OK</button>
             <button disabled id="sure-cancel">Cancel</button>
@@ -76,22 +82,7 @@
         </div>
       </div>
     </div>
-    <div
-      class="window"
-      style="
-        width: auto;
-        position: absolute;
-        right: 320px;
-        bottom: 160px;
-        z-index: -1;
-      "
-    >
-      <div class="status-bar">
-        <p class="status-bar-field">Press F1 for help</p>
-        <p class="status-bar-field">Last Updated: 01/27/24</p>
-        <p class="status-bar-field">CPU Usage: ??%</p>
-      </div>
-    </div>
+
     <div
       class="window"
       style="
@@ -103,6 +94,7 @@
       "
     >
       <div class="status-bar">
+        <p class="status-bar-field">Last Updated: 01/27/24</p>
         <a target="_blank" href="https://github.com/teriyake"
           ><p class="status-bar-field">Github</p></a
         >
@@ -113,19 +105,36 @@
         <a href="mailto:tke@brynmawr.edu"
           ><p class="status-bar-field">Email</p></a
         >
+        <p class="status-bar-field"></p>
+        <p class="status-bar-field">Press F1 for help</p>
+        <div class="field-row status-bar-field" style="width: 300px">
+          <label for="range25"
+            ><img src="sndvol32_main.ico" height="12" style="margin-left: 5px"
+          /></label>
+          <label for="range25">Volume:</label>
+          <label for="range26">Low</label>
+          <input id="range26" type="range" min="1" max="11" value="5" />
+          <label for="range27">High</label>
+        </div>
+        <p class="status-bar-field">CPU Usage: ??%</p>
       </div>
     </div>
 
     <div
       class="window"
-      style="width: 110px; position: absolute; top: 360px; left: 280px"
+      style="width: 100px; position: absolute; top: 360px; left: 280px"
     >
-      <div class="title-bar">
-        <div class="title-bar-text">Cow</div>
+      <div class="title-bar" id="cow-title">
+        <div class="title-bar-text">
+          <img
+            id="projects-busy"
+            src="sndyel.ico"
+            height="12"
+            style="margin-right: 5px"
+          />Cow
+        </div>
         <div class="title-bar-controls">
-          <button aria-label="Minimize"></button>
-          <button aria-label="Maximize"></button>
-          <button aria-label="Close"></button>
+          <button id="cow-close" aria-label="Close"></button>
         </div>
       </div>
       <div class="window-body">
@@ -146,13 +155,154 @@
         </div>
       </div>
     </div>
-    <div class="window" style="position: absolute; right: 80px; top: 60px">
+
+    <div
+      class="window"
+      id="cow-question"
+      style="
+        margin: 32px;
+        width: 400px;
+        display: none;
+        position: absolute;
+        top: 370px;
+        left: 210px;
+      "
+    >
+      <div class="title-bar" id="cow-title-2">
+        <div class="title-bar-text">Question</div>
+
+        <div class="title-bar-controls">
+          <button disabled aria-label="Minimize"></button>
+          <button disabled aria-label="Maximize"></button>
+          <button disabled aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="with-icon">
+          <span><img src="msg_question.ico" /></span>
+          <p>Are you sure you want to terminate the cow program?</p>
+        </div>
+        <section class="field-row" style="justify-content: flex-end">
+          <button id="cow-ok">OK</button>
+          <button id="cow-cancel">Cancel</button>
+        </section>
+      </div>
+    </div>
+
+    <div
+      class="window"
+      id="cow-question-2"
+      style="
+        margin: 32px;
+        width: 400px;
+        display: none;
+        position: absolute;
+        top: 400px;
+        left: 240px;
+      "
+    >
+      <div class="title-bar" id="cow-title-3">
+        <div class="title-bar-text">Question</div>
+
+        <div class="title-bar-controls">
+          <button disabled aria-label="Minimize"></button>
+          <button disabled aria-label="Maximize"></button>
+          <button disabled aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="with-icon">
+          <span><img src="msg_question.ico" /></span>
+          <p>Do you really want to kill the cow?</p>
+        </div>
+        <section class="field-row" style="justify-content: flex-end">
+          <button id="cow-ok-2">OK</button>
+          <button id="cow-cancel-2">Cancel</button>
+        </section>
+      </div>
+    </div>
+
+    <div
+      class="window"
+      id="cow-error"
+      style="
+        margin: 32px;
+        width: 350px;
+        display: none;
+        position: absolute;
+        top: 440px;
+        left: 450px;
+        z-index: 998;
+      "
+    >
       <div class="title-bar">
-        <div class="title-bar-text">Projects</div>
+        <div class="title-bar-text">Error</div>
+
+        <div class="title-bar-controls">
+          <button disabled aria-label="Minimize"></button>
+          <button disabled aria-label="Maximize"></button>
+          <button disabled aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="with-icon">
+          <span><img src="msg_error.ico" /></span>
+          <p>Something went wrong. Press "Fix" to fix.</p>
+        </div>
+        <section class="field-row" style="justify-content: flex-end">
+          <button disabled>Fix</button>
+        </section>
+      </div>
+    </div>
+
+    <div
+      class="window"
+      id="projects-error"
+      style="
+        margin: 32px;
+        width: 350px;
+        display: none;
+        position: absolute;
+        top: 195px;
+        left: 550px;
+        z-index: 998;
+      "
+    >
+      <div class="title-bar">
+        <div class="title-bar-text">Error</div>
+
+        <div class="title-bar-controls">
+          <button disabled aria-label="Minimize"></button>
+          <button disabled aria-label="Maximize"></button>
+          <button disabled aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="with-icon">
+          <span><img src="msg_error.ico" /></span>
+          <p>An unknown error has occured.</p>
+        </div>
+        <section class="field-row" style="justify-content: flex-end">
+          <button disabled>OK</button>
+          <button disabled>Cancel</button>
+        </section>
+      </div>
+    </div>
+
+    <div class="window" style="position: absolute; right: 80px; top: 60px">
+      <div class="title-bar" id="projects-title-bar">
+        <div class="title-bar-text">
+          <img
+            id="projects-busy"
+            src="application_hourglass.ico"
+            height="12"
+            style="margin-right: 5px; display: none"
+          />Projects
+        </div>
         <div class="title-bar-controls">
           <button aria-label="Minimize"></button>
           <button aria-label="Maximize"></button>
-          <button aria-label="Close"></button>
+          <button id="projects-close" aria-label="Close"></button>
         </div>
       </div>
 
@@ -241,6 +391,7 @@
         position: absolute;
         top: 300px;
         left: 200px;
+        z-index: 999;
       "
     >
       <div class="title-bar">
@@ -264,6 +415,7 @@
         top: 0px;
         left: 0px;
         visibility: hidden;
+        z-index: 1000;
       "
     >
       <div class="title-bar">

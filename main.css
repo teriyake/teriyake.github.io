@@ -26,6 +26,13 @@ p.status-bar-field {
   padding-right: 12px;
 }
 
+.with-icon {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-gap: 10px;
+  align-items: center;
+}
+
 #projects tr:hover {
   background: #000080 !important;
   color: #fefefe !important;
@@ -51,4 +58,5 @@ p.status-bar-field {
   left: 0;
   width: 90vw !important;
   height: 100%;
+  z-index: 999;
 }

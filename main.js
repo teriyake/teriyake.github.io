@@ -22,6 +22,41 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("are-u-sure").style.display = "block";
       document.getElementById("about-title-bar").classList.add("inactive");
     });
+
+  document.getElementById("cow-close").addEventListener("click", function (e) {
+    e.preventDefault();
+    document.getElementById("cow-question").style.display = "block";
+  });
+  document.getElementById("cow-ok").addEventListener("click", function (e) {
+    e.preventDefault();
+    document.getElementById("cow-question-2").style.display = "block";
+  });
+  document.getElementById("cow-cancel").addEventListener("click", function (e) {
+    e.preventDefault();
+    document.getElementById("cow-question").style.display = "none";
+  });
+  document.getElementById("cow-ok-2").addEventListener("click", function (e) {
+    e.preventDefault();
+    document.getElementById("cow-error").style.display = "block";
+    document.getElementById("cow-title").classList.add("inactive");
+    document.getElementById("cow-title-1").classList.add("inactive");
+    document.getElementById("cow-title-2").classList.add("inactive");
+  });
+  document
+    .getElementById("cow-cancel-2")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      document.getElementById("cow-question").style.display = "none";
+      document.getElementById("cow-question-2").style.display = "none";
+    });
+  document
+    .getElementById("projects-close")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      document.getElementById("projects-error").style.display = "block";
+      document.getElementById("projects-busy").style.display = "inline";
+      document.getElementById("projects-title-bar").classList.add("inactive");
+    });
   document.getElementById("window-ok").addEventListener("click", function (e) {
     e.preventDefault();
     document.getElementById("real-window").style.display = "block";
