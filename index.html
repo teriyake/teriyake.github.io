@@ -3,12 +3,52 @@
   <head>
     <title>Teri</title>
     <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"
+    />
     <link rel="stylesheet" href="https://unpkg.com/98.css" />
     <link rel="stylesheet" href="main.css" />
     <script type="text/javascript" src="main.js"></script>
   </head>
 
   <body>
+    <div
+      class="mobile"
+      style="
+        display: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 999999;
+        width: 100vw;
+        height: 100vh;
+        background-color: #008080;
+      "
+    >
+      <div
+        class="window"
+        id="mobile-error"
+        style="margin: 30vw; width: 40vw; display: block"
+      >
+        <div class="title-bar">
+          <div class="title-bar-text">Error</div>
+
+          <div class="title-bar-controls">
+            <button disabled aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="with-icon">
+            <span><img src="msg_error.ico" /></span>
+            <p>This website only works on desktop.</p>
+          </div>
+          <section class="field-row" style="justify-content: flex-end">
+            <button disabled>OK</button>
+          </section>
+        </div>
+      </div>
+    </div>
     <div
       class="window"
       style="margin: 32px; width: 250px; margin-left: 390px !important"

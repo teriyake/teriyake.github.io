@@ -60,3 +60,15 @@ p.status-bar-field {
   height: 100%;
   z-index: 999;
 }
+
+@media all and (max-width: 600px) {
+  body {
+    overflow: hidden;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .mobile {
+    display: block !important;
+  }
+}
