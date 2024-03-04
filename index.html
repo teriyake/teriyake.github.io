@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://unpkg.com/98.css" />
     <link rel="stylesheet" href="main.css" />
     <script type="text/javascript" src="main.js"></script>
-    <link rel="icon" type="image/x-icon" href="overlay_share.ico">
+    <link rel="icon" type="image/x-icon" href="overlay_share.ico" />
   </head>
 
   <body>
@@ -135,7 +135,7 @@
       "
     >
       <div class="status-bar">
-        <p class="status-bar-field">Last Updated: 01/27/24</p>
+        <p class="status-bar-field">Last Updated: 03/04/24</p>
         <a target="_blank" href="https://github.com/teriyake"
           ><p class="status-bar-field">Github</p></a
         >
@@ -416,11 +416,27 @@
                 <tr>
                   <th>Name</th>
                   <th>Type</th>
-                  <th>Date</th>
+                  <th>Last Updated</th>
                   <th>Description</th>
                 </tr>
               </thead>
               <tbody id="projects">
+                <tr
+                  onclick="window.open('https://github.com/teriyake/nonplace');"
+                >
+                  <td>nonplace</td>
+                  <td>Art</td>
+                  <td>02/04/24</td>
+                  <td>Generative maps for places that may or may not exist</td>
+                </tr>
+                <tr
+                  onclick="window.open('https://github.com/teriyake/go-git-it');"
+                >
+                  <td>ggi (go git it)</td>
+                  <td>Software</td>
+                  <td>02/02/24</td>
+                  <td>A cli app that uses Github Repos as to-do lists</td>
+                </tr>
                 <tr
                   onclick="window.open('https://nearestthreshold.bandcamp.com/album/peregrine-01');"
                 >
@@ -564,6 +580,7 @@
             display: none;
           "
         ></div>
+        <!--
         <video
           id="clouds"
           class="video-js"
@@ -572,6 +589,22 @@
           autoplay
           data-setup='{"controls": false, "muted": true, "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=P9C25Un7xaM"}], "youtube": { "ytControls": 0, "playsinline": 1, "disablekb": 1, "iv_load_policy": 3, "loop": 1, "start": 35220, "end": "38820"} }'
         ></video>
+        -->
+        <div style="overflow: hidden">
+          <iframe
+            id="ChiaHouse"
+            src="https://las-pinas.com/h.html?i=teri"
+            onload='javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));'
+            style="
+              width: 100vw;
+              min-height: 600px;
+              border: medium;
+              overflow: scroll;
+              height: 540px;
+            "
+            houseid="teri"
+          ></iframe>
+        </div>
       </div>
     </div>
 
