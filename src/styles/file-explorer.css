@@ -1,0 +1,53 @@
+.file-explorer-toolbar {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.file-explorer-toolbar .address-bar {
+    flex-grow: 1;
+    margin-left: 4px;
+    padding: 2px 4px;
+    font-family: monospace;
+}
+
+.file-explorer-content {
+    height: calc(100% - 35px);
+    padding: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 16px;
+    overflow-y: auto;
+}
+
+.file-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.file-icon img {
+    margin-bottom: 4px;
+    image-rendering: pixelated;
+}
+
+.file-icon span {
+    font-size: 12px;
+    background-color: #c0c0c0;
+    color: #222;
+    outline: 1px dotted transparent;
+    padding: 1px 2px;
+    word-break: break-all;
+}
+
+.file-icon:hover span {
+    background: #000080;
+    color: #ffffff;
+    outline: 1px dotted #ffffff;
+}
