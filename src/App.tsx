@@ -621,7 +621,7 @@ function App() {
                     className="sunken-panel"
                     style={{ height: '264px', width: '520px' }}
                 >
-                    <table className="interactive">
+                    <table className="interactive projects">
                         <thead>
                             <tr>
                                 <th>Name</th>

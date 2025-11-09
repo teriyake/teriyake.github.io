@@ -33,7 +33,7 @@ p.status-bar-field {
     align-items: center;
 }
 
-#projects tr:hover {
+.projects tr:hover {
     background: #000080 !important;
     color: #fefefe !important;
     outline: 1px dotted #fefefe;
