@@ -16,6 +16,9 @@ jobs:
 
       - name: Setup Node
         uses: actions/setup-node@v4
+      
+      - name: Inject Build Date
+        run: echo "BUILD_DATE=$(date -u +'%m/%d/%y %H:%M:%S UTC')" >> .env.production
 
       - name: Install dependencies
         uses: bahmutov/npm-install@v1

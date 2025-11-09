@@ -66,6 +66,8 @@ const DesktopIcon: React.FC<{
     </div>
 );
 
+const buildDate = import.meta.env.BUILD_DATE || 'mm/dd/yy';
+
 function App() {
     const [showMobileError, setShowMobileError] = useState(false);
     const [showAreYouSure, setShowAreYouSure] = useState(false);
@@ -780,7 +782,7 @@ function App() {
                 }}
             >
                 <div className="status-bar">
-                    <p className="status-bar-field">Last Updated: mm/dd/yy</p>
+                    <p className="status-bar-field">Last Updated: {buildDate}</p>
                     <div
                         className="field-row status-bar-field"
                         style={{ width: '300px' }}
