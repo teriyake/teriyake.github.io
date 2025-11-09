@@ -1,0 +1,27 @@
+[
+    {
+        "id": "my_brain",
+        "label": "My Brain",
+        "icon": "icons/computer_explorer.ico",
+        "type": "program",
+        "program": "FileExplorer",
+        "position": { "top": "250px", "left": "40px" }
+    },
+    {
+        "id": "image1",
+        "label": "screenshot_1.png",
+        "icon": "icons/imagPNG.ico",
+        "type": "image",
+        "path": "/images/screenshot_1.png",
+        "position": { "top": "380px", "left": "20px" }
+    },
+    {
+        "id": "image2",
+        "label": "screenshot_1(1).png",
+        "icon": "icons/imagPNG.ico",
+        "type": "image",
+        "path": "/images/screenshot_1.png",
+        "position": { "top": "440px", "left": "50px" },
+        "size": { "width": "600", "height": "400" }
+    }
+]
