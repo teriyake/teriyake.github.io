@@ -4,6 +4,7 @@ import EvasiveWindow from './components/EvasiveWindow';
 import LivingWindow from './components/LivingWindow';
 import DegradableWindow from './components/DegradableWindow';
 import FileExplorer from './components/FileExplorer';
+import ImageViewer from './components/ImageViewer';
 import './styles/living-window.css';
 import './styles/degradable-window.css';
 import './styles/file-explorer.css';
@@ -15,6 +16,26 @@ interface Project {
     lastUpdated: string;
     description: string;
     url: string | null;
+}
+
+interface DesktopItem {
+    id: string;
+    label: string;
+    icon: string;
+    type: 'program' | 'image';
+    program?: string;
+    path?: string;
+    position: { top: string; left: string };
+    size?: { width: number; height: number };
+}
+
+interface OpenWindow {
+    id: string;
+    title: string;
+    content: React.ReactNode;
+    position: { x: number; y: number };
+    size: { width: number; height: number };
+    degradationEnabled: boolean;
 }
 
 const sortProjects = (projects: Project[]): Project[] => {
@@ -70,6 +91,9 @@ const DesktopIcon: React.FC<{
 const buildDate = import.meta.env.VITE_BUILD_DATE || 'mm/dd/yy';
 
 function App() {
+    const [desktopItems, setDesktopItems] = useState<DesktopItem[]>([]);
+    const [openWindows, setOpenWindows] = useState<OpenWindow[]>([]);
+
     const [showMobileError, setShowMobileError] = useState(false);
     const [showAreYouSure, setShowAreYouSure] = useState(false);
     const [_isAboutTitleInactive, setIsAboutTitleInactive] = useState(false);
@@ -140,6 +164,34 @@ function App() {
         setShowComplaint(true);
     };
 
+    const handleIconDoubleClick = (item: DesktopItem) => {
+        if (item.type === 'program' && item.program === 'FileExplorer') {
+            setShowFileExplorer(true);
+            return;
+        }
+
+        if (item.type === 'image' && item.path) {
+            const newWindow: OpenWindow = {
+                id: `${item.id}-${Date.now()}`,
+                title: item.label,
+                content: (
+                    <ImageViewer imageUrl={item.path} imageName={item.label} />
+                ),
+                position: {
+                    x: Math.random() * 200 + 100,
+                    y: Math.random() * 200 + 100,
+                },
+                size: item.size ? item.size : { width: 400, height: 300 },
+                degradationEnabled: false,
+            };
+            setOpenWindows((prev) => [...prev, newWindow]);
+        }
+    };
+
+    const closeWindow = (id: string) => {
+        setOpenWindows((prev) => prev.filter((win) => win.id !== id));
+    };
+
     useEffect(() => {
         if (window.innerWidth <= 600) {
             setShowMobileError(true);
@@ -147,6 +199,13 @@ function App() {
     }, []);
 
     useEffect(() => {
+        fetch('/content/desktop.json')
+            .then((res) => res.json())
+            .then(setDesktopItems)
+            .catch((err) =>
+                console.error('Failed to load desktop items:', err),
+            );
+
         fetch('/content/projects.json')
             .then((res) => res.json())
             .then((data) => {
@@ -222,15 +281,34 @@ function App() {
 
     return (
         <>
-            <DesktopIcon
-                icon="icons/computer_explorer.ico"
-                label="My Brain"
-                onDoubleClick={() => setShowFileExplorer(true)}
-                style={{
-                    top: '250px',
-                    left: '40px',
-                }}
-            />
+            {desktopItems.map((item) => (
+                <DesktopIcon
+                    key={item.id}
+                    icon={item.icon}
+                    label={item.label}
+                    onDoubleClick={() => handleIconDoubleClick(item)}
+                    style={item.position}
+                />
+            ))}
+
+            {openWindows.map((win) => (
+                <DegradableWindow
+                    key={win.id}
+                    title={win.title}
+                    initialPosition={win.position}
+                    initialSize={win.size}
+                    degradationEnabled={win.degradationEnabled}
+                    elasticResize={true}
+                    titleBarControls={
+                        <button
+                            aria-label="Close"
+                            onClick={() => closeWindow(win.id)}
+                        ></button>
+                    }
+                >
+                    {win.content}
+                </DegradableWindow>
+            ))}
 
             {showFileExplorer && (
                 <FileExplorer
