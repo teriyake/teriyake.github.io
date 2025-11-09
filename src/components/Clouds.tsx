@@ -13,15 +13,18 @@ interface CloudsProps {
     apiKey: string;
     layerCount?: number;
     refreshInterval?: number;
+    searchRadius?: number;
 }
 
 const Clouds: React.FC<CloudsProps> = ({
     apiKey,
     layerCount = 4,
     refreshInterval = 300000,
+    searchRadius = 50000,
 }) => {
     const [layers, setLayers] = useState<CloudLayer[]>([]);
     const [isGenerating, setIsGenerating] = useState(false);
+    const [generationStatus, setGenerationStatus] = useState<string>('');
     const canvasRef = useRef<HTMLDivElement>(null);
 
     const generateRandomCoordinate = () => {
@@ -32,8 +35,37 @@ const Clouds: React.FC<CloudsProps> = ({
         return { lat, lon };
     };
 
+    const checkStreetViewAvailability = async (
+        lat: number,
+        lon: number,
+    ): Promise<{
+        available: boolean;
+        actualLat?: number;
+        actualLon?: number;
+    }> => {
+        try {
+            const metadataUrl = `https://maps.googleapis.com/maps/api/streetview/metadata?location=${lat},${lon}&radius=${searchRadius}&key=${apiKey}`;
+
+            const response = await fetch(metadataUrl);
+            const data = await response.json();
+
+            if (data.status === 'OK') {
+                return {
+                    available: true,
+                    actualLat: data.location.lat,
+                    actualLon: data.location.lng,
+                };
+            }
+
+            return { available: false };
+        } catch (error) {
+            console.error('Error checking Street View availability:', error);
+            return { available: false };
+        }
+    };
+
     const generateStreetViewURL = (lat: number, lon: number) => {
-        const pitch = 85 + Math.random() * 10;
+        const pitch = 88 + Math.random() * 4;
 
         const heading = Math.random() * 360;
 
@@ -44,21 +76,55 @@ const Clouds: React.FC<CloudsProps> = ({
         return `https://maps.googleapis.com/maps/api/streetview?size=${size}&location=${lat},${lon}&pitch=${pitch}&heading=${heading}&fov=${fov}&key=${apiKey}`;
     };
 
-    const generateLayers = () => {
+    const findValidStreetViewLocation = async (
+        maxAttempts = 50,
+    ): Promise<{ lat: number; lon: number } | null> => {
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            const { lat, lon } = generateRandomCoordinate();
+            const result = await checkStreetViewAvailability(lat, lon);
+
+            if (result.available && result.actualLat && result.actualLon) {
+                return {
+                    lat: result.actualLat,
+                    lon: result.actualLon,
+                };
+            }
+
+            setGenerationStatus(
+                `Searching for skies... attempt ${attempt + 1}`,
+            );
+        }
+
+        return null;
+    };
+
+    const generateLayers = async () => {
         setIsGenerating(true);
+        setGenerationStatus('Generating new composite sky...');
 
         const newLayers: CloudLayer[] = [];
 
         for (let i = 0; i < layerCount; i++) {
-            const { lat, lon } = generateRandomCoordinate();
+            setGenerationStatus(`Finding sky ${i + 1} of ${layerCount}...`);
 
-            const opacity = 0.3 + (i / layerCount) * 0.5;
+            const location = await findValidStreetViewLocation();
 
+            if (!location) {
+                console.warn(
+                    `Could not find valid Street View location for layer ${
+                        i + 1
+                    }`,
+                );
+                continue;
+            }
+
+            //const opacity = 0.5 + 0.2 * (Math.random() * 2 - 1);
+            const opacity = 0.8;
             newLayers.push({
                 id: Date.now() + i,
-                lat,
-                lon,
-                url: generateStreetViewURL(lat, lon),
+                lat: location.lat,
+                lon: location.lon,
+                url: generateStreetViewURL(location.lat, location.lon),
                 opacity,
                 loaded: false,
             });
@@ -66,6 +132,7 @@ const Clouds: React.FC<CloudsProps> = ({
 
         setLayers(newLayers);
         setIsGenerating(false);
+        setGenerationStatus('');
     };
 
     const handleImageLoad = (layerId: number) => {
@@ -76,22 +143,32 @@ const Clouds: React.FC<CloudsProps> = ({
         );
     };
 
-    const handleImageError = (layerId: number) => {
-        setLayers((prev) =>
-            prev.map((layer) => {
-                if (layer.id === layerId) {
-                    const { lat, lon } = generateRandomCoordinate();
-                    return {
-                        ...layer,
-                        lat,
-                        lon,
-                        url: generateStreetViewURL(lat, lon),
-                        loaded: false,
-                    };
-                }
-                return layer;
-            }),
+    const handleImageError = async (layerId: number) => {
+        console.warn(
+            `Image failed to load for layer ${layerId}, finding new location...`,
         );
+
+        const location = await findValidStreetViewLocation();
+
+        if (location) {
+            setLayers((prev) =>
+                prev.map((layer) => {
+                    if (layer.id === layerId) {
+                        return {
+                            ...layer,
+                            lat: location.lat,
+                            lon: location.lon,
+                            url: generateStreetViewURL(
+                                location.lat,
+                                location.lon,
+                            ),
+                            loaded: false,
+                        };
+                    }
+                    return layer;
+                }),
+            );
+        }
     };
 
     useEffect(() => {
@@ -109,7 +186,7 @@ const Clouds: React.FC<CloudsProps> = ({
     }, [refreshInterval]);
 
     const loadedCount = layers.filter((l) => l.loaded).length;
-    const isFullyLoaded = loadedCount === layerCount;
+    const isFullyLoaded = loadedCount === layerCount && !isGenerating;
 
     return (
         <div
@@ -121,7 +198,7 @@ const Clouds: React.FC<CloudsProps> = ({
                 overflow: 'hidden',
             }}
         >
-            {!isFullyLoaded && (
+            {(!isFullyLoaded || isGenerating) && (
                 <div
                     style={{
                         position: 'absolute',
@@ -165,8 +242,7 @@ const Clouds: React.FC<CloudsProps> = ({
                             height: '100%',
                             objectFit: 'cover',
                             opacity: layer.loaded ? layer.opacity : 0,
-                            transition: 'opacity 2s ease-in-out',
-                            mixBlendMode: 'normal',
+                            mixBlendMode: 'hard-light',
                         }}
                     />
                 ))}
