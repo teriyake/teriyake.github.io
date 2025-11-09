@@ -1,0 +1,80 @@
+{
+    "type": "folder",
+    "icon": "directory_open_file_mydocs",
+    "content": {
+        "Projects": {
+            "type": "folder",
+            "icon": "directory_control_panel",
+            "content": {
+                "nonplace.link": {
+                    "type": "link",
+                    "icon": "html",
+                    "url": "https://github.com/teriyake/nonplace"
+                },
+                "this_website.src": {
+                    "type": "program",
+                    "icon": "executable",
+                    "content": "FileExplorer"
+                },
+                "satellite_artists_statement.txt": {
+                    "type": "file",
+                    "icon": "file_lines",
+                    "contentPath": "/content/projects/satellite_artists_statement.md"
+                },
+                "forgotten_ideas.txt": {
+                    "type": "file",
+                    "icon": "file_lines",
+                    "contentPath": "/content/projects/forgotten_ideas.md"
+                }
+            }
+        },
+        "Blog_Posts": {
+            "type": "folder",
+            "icon": "directory_open_file_mydocs",
+            "content": {
+                "on_digital_materiality.txt": {
+                    "type": "file",
+                    "icon": "file_lines",
+                    "contentPath": "/content/blog/on_digital_materiality.md"
+                },
+                "why_chaos.md": {
+                    "type": "file",
+                    "icon": "file_lines",
+                    "contentPath": "/content/blog/why_chaos.md"
+                }
+            }
+        },
+        "System32_but_for_feelings": {
+            "type": "folder",
+            "icon": "restrict",
+            "content": {
+                "regret.dll": {
+                    "type": "error",
+                    "icon": "chm",
+                    "content": "Memory could not be read. It's better this way."
+                },
+                "joy.exe": {
+                    "type": "file",
+                    "icon": "utopia_smiley",
+                    "contentPath": "/content/system/joy.txt"
+                },
+                "the_abyss": {
+                    "type": "folder",
+                    "icon": "directory_open_file_mydocs",
+                    "content": {
+                        "stare_back.txt": {
+                            "type": "file",
+                            "icon": "file_eye",
+                            "content": "It's staring back. What did you expect?"
+                        }
+                    }
+                }
+            }
+        },
+        "about_me.txt": {
+            "type": "file",
+            "icon": "user_computer",
+            "contentPath": "/content/about_me.md"
+        }
+    }
+}

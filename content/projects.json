@@ -1,0 +1,100 @@
+[
+    {
+        "name": "Solar Wind Music",
+        "type": "Music/Software/Experiment",
+        "lastUpdated": "09/23/2022",
+        "description": "A WIP PureData patch that generates ambient music from solar wind data fetched by Python",
+        "url": "https://github.com/teriyake/solar-wind-music"
+    },
+    {
+        "name": "G.O.M.M.",
+        "type": "Typography",
+        "lastUpdated": "04/15/2022",
+        "description": "A serif typeface",
+        "url": "https://github.com/teriyake/GOMM"
+    },
+    {
+        "name": "Peregrine 01",
+        "type": "Music",
+        "lastUpdated": "01/18/2024",
+        "description": "An ambient album recorded with modular synths",
+        "url": "https://nearestthreshold.bandcamp.com/album/peregrine-01"
+    },
+    {
+        "name": "Afterimage",
+        "type": "Music",
+        "lastUpdated": "11/05/2025",
+        "description": "A shoegaze EP",
+        "url": "https://borrowed-tide.bandcamp.com/album/afterimage"
+    },
+    {
+        "name": "nonplace",
+        "type": "Art",
+        "lastUpdated": "02/04/2024",
+        "description": "Generative maps for places that may or may not exist",
+        "url": "https://github.com/teriyake/nonplace"
+    },
+    {
+        "name": "go-git-it (ggi)",
+        "type": "Software",
+        "lastUpdated": "02/02/2024",
+        "description": "A Go cli app that uses GitHub repos as to-do lists",
+        "url": "https://github.com/teriyake/go-git-it"
+    },
+    {
+        "name": "goo",
+        "type": "Software/Experiment",
+        "lastUpdated": "01/18/2024",
+        "description": "A functional programming language inspired by & written in Go",
+        "url": "https://github.com/teriyake/goo"
+    },
+    {
+        "name": "this website",
+        "type": "Experiment",
+        "lastUpdated": "Ongoing",
+        "description": "A strange website",
+        "url": "https://github.com/teriyake/teriyake.github.io"
+    },
+    {
+        "name": "Satellite",
+        "type": "Art/Software/Experiment",
+        "lastUpdated": "10/12/2025",
+        "description": "A site-specific installation combining AR with modular synthesis to create place-based, interactive soundscapes. Explore the computer to read more about the artist's statement.",
+        "url": "https://teri.localplayer.dev/satellite"
+    },
+    {
+        "name": "AutoSculptor",
+        "type": "Software",
+        "lastUpdated": "05/10/2025",
+        "description": "A Maya Python plugin that provides real-time autocomplete suggestions during 3D sculpting",
+        "url": "https://github.com/teriyake/AutoSculptor"
+    },
+    {
+        "name": "Jacquard",
+        "type": "Software",
+        "lastUpdated": "04/26/2025",
+        "description": "A C++ weaving design software using SDF + PBR to visualize weaving drafts in real-time",
+        "url": "https://github.com/teriyake/Jacquard"
+    },
+    {
+        "name": "0x502",
+        "type": "Software",
+        "lastUpdated": "12/17/2024",
+        "description": "A collection of VCVRack modules using GLSL shaders for experimental audio synthesis",
+        "url": "https://github.com/teriyake/0x502"
+    },
+    {
+        "name": "Telepath (Unity)",
+        "type": "Software",
+        "lastUpdated": "04/30/2025",
+        "description": "A C++ Unity plugin for bi-directional communication with VCVRack",
+        "url": "https://github.com/teriyake/Telepath_Unity"
+    },
+    {
+        "name": "Telepath (VCVRack)",
+        "type": "Software",
+        "lastUpdated": "04/30/2025",
+        "description": "A collection of VCVRack modules for sending & receiving audio/control signals to/from Unity",
+        "url": "https://github.com/teriyake/Telepath_VCVRack"
+    }
+]
