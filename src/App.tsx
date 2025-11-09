@@ -5,6 +5,7 @@ import LivingWindow from './components/LivingWindow';
 import DegradableWindow from './components/DegradableWindow';
 import FileExplorer from './components/FileExplorer';
 import ImageViewer from './components/ImageViewer';
+import Clouds from './components/Clouds';
 import './styles/living-window.css';
 import './styles/degradable-window.css';
 import './styles/file-explorer.css';
@@ -109,7 +110,7 @@ function App() {
     const [showError1, setShowError1] = useState(false);
     const [showError2, setShowError2] = useState(false);
     const [isVolSliderDisabled, setIsVolSliderDisabled] = useState(false);
-    const [_showRealWindow, _setShowRealWindow] = useState(false);
+    const [showRealWindow, setShowRealWindow] = useState(false);
     const [showFileExplorer, setShowFileExplorer] = useState(false);
     const [projects, setProjects] = useState<Project[]>([]);
 
@@ -150,15 +151,10 @@ function App() {
         }
     };
     const handleOpenRealWindow = () => {
-        const realWindow = document.getElementById('real-window');
-        if (realWindow) {
-            realWindow.style.display = 'block';
-            realWindow.style.visibility = 'visible';
-        }
+        setShowRealWindow(true);
     };
     const handleCloseRealWindow = () => {
-        const realWindow = document.getElementById('real-window');
-        if (realWindow) realWindow.style.display = 'none';
+        setShowRealWindow(false);
     };
     const handleNoToWindow = () => {
         setShowComplaint(true);
@@ -808,47 +804,35 @@ function App() {
                 </Window>
             )}
 
-            <div
-                id="real-window"
-                className="window"
-                style={{
-                    width: '98vw',
-                    height: '97vh',
-                    position: 'absolute',
-                    top: '0px',
-                    left: '0px',
-                    visibility: 'hidden',
-                    zIndex: 1000,
-                }}
-            >
-                <div className="title-bar">
-                    <div className="title-bar-text">
-                        A window with a window in it
-                    </div>
-                    <div className="title-bar-controls">
-                        <button disabled aria-label="Minimize"></button>
-                        <button disabled aria-label="Maximize"></button>
-                        <button
-                            aria-label="Close"
-                            onClick={handleCloseRealWindow}
-                        ></button>
-                    </div>
-                </div>
-                <div className="window-body" style={{ overflowY: 'hidden' }}>
-                    <div style={{ overflow: 'hidden' }}>
-                        <iframe
-                            id="ChiaHouse"
-                            src="https://las-pinas.com/h.html?i=teri"
-                            style={{
-                                width: '100%',
-                                height: '88vh',
-                                border: 'medium',
-                            }}
-                            title="Chia House"
-                        ></iframe>
-                    </div>
-                </div>
-            </div>
+            {showRealWindow && (
+                <Window
+                    title="A window with a window inside"
+                    style={{
+                        width: '95vw',
+                        height: '95vh',
+                        position: 'absolute',
+                        top: '0',
+                        left: '2.5vw',
+                        zIndex: 1000,
+                    }}
+                    titleBarControls={
+                        <>
+                            <button disabled aria-label="Minimize"></button>
+                            <button disabled aria-label="Maximize"></button>
+                            <button
+                                aria-label="Close"
+                                onClick={handleCloseRealWindow}
+                            ></button>
+                        </>
+                    }
+                >
+                    <Clouds
+                        apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
+                        layerCount={5}
+                        refreshInterval={300000}
+                    />
+                </Window>
+            )}
 
             <div
                 className="window"
