@@ -66,7 +66,7 @@ const DesktopIcon: React.FC<{
     </div>
 );
 
-const buildDate = import.meta.env.BUILD_DATE || 'mm/dd/yy';
+const buildDate = import.meta.env.VITE_BUILD_DATE || 'mm/dd/yy';
 
 function App() {
     const [showMobileError, setShowMobileError] = useState(false);
