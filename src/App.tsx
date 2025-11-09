@@ -7,6 +7,7 @@ import FileExplorer from './components/FileExplorer';
 import './styles/living-window.css';
 import './styles/degradable-window.css';
 import './styles/file-explorer.css';
+import './styles/image-viewer.css';
 
 interface Project {
     name: string;
@@ -782,7 +783,9 @@ function App() {
                 }}
             >
                 <div className="status-bar">
-                    <p className="status-bar-field">Last Updated: {buildDate}</p>
+                    <p className="status-bar-field">
+                        Last Updated: {buildDate}
+                    </p>
                     <div
                         className="field-row status-bar-field"
                         style={{ width: '300px' }}

@@ -6,6 +6,27 @@
             "type": "folder",
             "icon": "directory_control_panel",
             "content": {
+                "screenshot_1.PNG": {
+                    "type": "file",
+                    "icon": "imagPNG",
+                    "contentPath": "/images/screenshot_1.png"
+                },
+                "satellite": {
+                    "type": "folder",
+                    "icon": "channels",
+                    "content": {
+                        "satellite_artists_statement.txt": {
+                            "type": "file",
+                            "icon": "file_lines",
+                            "contentPath": "/content/projects/satellite_artists_statement.md"
+                        },
+                        "satellite.link": {
+                            "type": "link",
+                            "icon": "html",
+                            "url": "https://teri.localplayer.dev/satellite"
+                        }
+                    }
+                },
                 "nonplace.link": {
                     "type": "link",
                     "icon": "html",
@@ -16,15 +37,26 @@
                     "icon": "executable",
                     "content": "FileExplorer"
                 },
-                "satellite_artists_statement.txt": {
-                    "type": "file",
-                    "icon": "file_lines",
-                    "contentPath": "/content/projects/satellite_artists_statement.md"
-                },
                 "forgotten_ideas.txt": {
                     "type": "file",
                     "icon": "file_lines",
                     "contentPath": "/content/projects/forgotten_ideas.md"
+                }
+            }
+        },
+        "Music": {
+            "type": "folder",
+            "icon": "mixer_cd_sound",
+            "content": {
+                "Borrowed_Tide": {
+                    "type": "link",
+                    "icon": "html",
+                    "url": "https://borrowed-tide.bandcamp.com"
+                },
+                "Nearest_Threshold": {
+                    "type": "link",
+                    "icon": "html",
+                    "url": "https://nearestthreshold.bandcamp.com"
                 }
             }
         },
@@ -44,7 +76,7 @@
                 }
             }
         },
-        "System32_but_for_feelings": {
+        "System32": {
             "type": "folder",
             "icon": "restrict",
             "content": {
@@ -53,7 +85,7 @@
                     "icon": "chm",
                     "content": "Memory could not be read. It's better this way."
                 },
-                "joy.exe": {
+                "???.exe": {
                     "type": "file",
                     "icon": "utopia_smiley",
                     "contentPath": "/content/system/joy.txt"

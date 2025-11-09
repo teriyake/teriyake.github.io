@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import DegradableWindow from './DegradableWindow';
+import ImageViewer from './ImageViewer';
 import type { FSNode, FSNodeMap } from '../types/fileSystem';
 
 interface OpenWindow {
@@ -8,6 +9,8 @@ interface OpenWindow {
     title: string;
     content: React.ReactNode;
     position: { x: number; y: number };
+    size: { width: number; height: number };
+    degradationEnabled: boolean;
 }
 
 interface FileExplorerProps {
@@ -32,6 +35,10 @@ const getNestedNode = (path: string[], fs: FSNode | null): FSNode | null => {
         }
     }
     return currNode;
+};
+
+const isImagePath = (path: string) => {
+    return /\.(jpe?g|png|gif|bmp|webp|svg)$/i.test(path);
 };
 
 const FileExplorer: React.FC<FileExplorerProps> = ({
@@ -80,19 +87,37 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
             case 'file':
             case 'error':
                 if (item.contentPath) {
-                    try {
-                        const response = await fetch(item.contentPath);
-                        const textContent = await response.text();
-
+                    if (isImagePath(item.contentPath)) {
                         openNewWindow(
                             name,
-                            <div style={{ margin: '10px' }}>
-                                <ReactMarkdown>{textContent}</ReactMarkdown>
-                            </div>,
+                            <ImageViewer
+                                imageUrl={item.contentPath}
+                                imageName={name}
+                            />,
+                            { width: 600, height: 500 },
+                            false,
                         );
-                    } catch (error) {
-                        console.error('Failed to fetch file content:', error);
-                        openNewWindow(name, <p>ERROR: Could not load file.</p>);
+                    } else {
+                        try {
+                            const response = await fetch(item.contentPath);
+                            const textContent = await response.text();
+
+                            openNewWindow(
+                                name,
+                                <div style={{ margin: '10px' }}>
+                                    <ReactMarkdown>{textContent}</ReactMarkdown>
+                                </div>,
+                            );
+                        } catch (error) {
+                            console.error(
+                                'Failed to fetch file content:',
+                                error,
+                            );
+                            openNewWindow(
+                                name,
+                                <p>ERROR: Could not load file.</p>,
+                            );
+                        }
                     }
                 } else {
                     openNewWindow(
@@ -120,7 +145,12 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
         }
     };
 
-    const openNewWindow = (title: string, content: React.ReactNode) => {
+    const openNewWindow = (
+        title: string,
+        content: React.ReactNode,
+        initialSize = { width: 350, height: 200 },
+        degradation = true,
+    ) => {
         const newWindow: OpenWindow = {
             id: Date.now(),
             title,
@@ -129,6 +159,8 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
                 x: initialPosition.x + 30 + Math.random() * 100,
                 y: initialPosition.y + 30 + Math.random() * 100,
             },
+            size: initialSize,
+            degradationEnabled: degradation,
         };
         setOpenWindows((prev) => [...prev, newWindow]);
     };
@@ -141,7 +173,7 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
         setCurrPath((prev) => prev.slice(0, -1));
     };
 
-    const pathString = `usr/teriyake/${currPath.join('/')}`;
+    const pathString = `C:\\Windows\\${currPath.join('\\')}`;
 
     if (!fileSystem) {
         return (
@@ -227,8 +259,8 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
                     key={win.id}
                     title={win.title}
                     initialPosition={win.position}
-                    initialSize={{ width: 350, height: 200 }}
-                    degradationEnabled={true}
+                    initialSize={win.size}
+                    degradationEnabled={win.degradationEnabled}
                     elasticResize={true}
                     titleBarControls={
                         <button
