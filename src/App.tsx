@@ -170,6 +170,11 @@ function App() {
             return;
         }
 
+        if (item.type === 'program' && item.program === 'Clouds') {
+            setShowRealWindow(true);
+            return;
+        }
+
         if (item.type === 'program' && item.program === 'MusicPlayer') {
             const newWindow: OpenWindow = {
                 id: `${item.id}-${Date.now()}`,
