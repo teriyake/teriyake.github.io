@@ -25,5 +25,13 @@
         "size": { "width": 300, "height": 400 },
         "audioSrc": "/music/demo_1.mp3",
         "coverArtUrl": "/music/demo_1.jpg"
+    },
+    {
+        "id": "clouds",
+        "label": "???",
+        "icon": "icons/windows_slanted.ico",
+        "type": "program",
+        "program": "Clouds",
+        "position": { "top": "300px", "left": "100px" }
     }
 ]
