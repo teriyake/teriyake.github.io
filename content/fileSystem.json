@@ -48,6 +48,12 @@
             "type": "folder",
             "icon": "mixer_cd_sound",
             "content": {
+                "demo_1.mp3": {
+                    "type": "music",
+                    "icon": "cd_audio_cd",
+                    "audioSrc": "/music/demo_1.mp3",
+                    "coverArtUrl": "/music/demo_1.jpg"
+                },
                 "Borrowed_Tide": {
                     "type": "link",
                     "icon": "html",
