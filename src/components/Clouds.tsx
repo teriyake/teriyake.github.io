@@ -5,8 +5,15 @@ interface CloudLayer {
     lat: number;
     lon: number;
     url: string;
-    opacity: number;
+    baseOpacity: number;
     loaded: boolean;
+    driftSpeed: { x: number; y: number };
+    opacityWaveFrequency: number;
+    opacityWaveAmplitude: number;
+    scaleWaveFrequency: number;
+    scaleWaveAmplitude: number;
+    rotationSpeed: number;
+    phaseOffset: number;
 }
 
 interface CloudsProps {
@@ -14,6 +21,12 @@ interface CloudsProps {
     layerCount?: number;
     refreshInterval?: number;
     searchRadius?: number;
+    enableEvolution?: boolean;
+    driftEnabled?: boolean;
+    opacityModulation?: boolean;
+    scaleModulation?: boolean;
+    rotationEnabled?: boolean;
+    evolutionSpeed?: number;
 }
 
 const Clouds: React.FC<CloudsProps> = ({
@@ -21,11 +34,21 @@ const Clouds: React.FC<CloudsProps> = ({
     layerCount = 4,
     refreshInterval = 300000,
     searchRadius = 50000,
+    enableEvolution = true,
+    driftEnabled = false,
+    opacityModulation = true,
+    scaleModulation = true,
+    rotationEnabled = false,
+    evolutionSpeed = 1.0,
 }) => {
     const [layers, setLayers] = useState<CloudLayer[]>([]);
     const [isGenerating, setIsGenerating] = useState(false);
-    const [generationStatus, setGenerationStatus] = useState<string>('');
+    const [_generationStatus, setGenerationStatus] = useState<string>('');
+    const [animationTime, setAnimationTime] = useState(0);
     const canvasRef = useRef<HTMLDivElement>(null);
+
+    const animationFrameRef = useRef<number>(0);
+    const lastFrameTimeRef = useRef<number>(Date.now());
 
     const generateRandomCoordinate = () => {
         const lat = Math.random() * 120 - 60;
@@ -98,6 +121,23 @@ const Clouds: React.FC<CloudsProps> = ({
         return null;
     };
 
+    const generateEvolutionParams = (layerIndex: number) => {
+        const seed = layerIndex / layerCount;
+
+        return {
+            driftSpeed: {
+                x: (Math.random() - 0.5) * 20,
+                y: (Math.random() - 0.5) * 5,
+            },
+            opacityWaveFrequency: 0.02 + seed * 0.1,
+            opacityWaveAmplitude: 0.07 + Math.random() * 0.2,
+            scaleWaveFrequency: 0.01 + seed * 0.005,
+            scaleWaveAmplitude: 0.01 + Math.random() * 0.03,
+            rotationSpeed: (Math.random() - 0.5) * 0.5,
+            phaseOffset: Math.random(),
+        };
+    };
+
     const generateLayers = async () => {
         setIsGenerating(true);
         setGenerationStatus('Generating new composite sky...');
@@ -118,15 +158,17 @@ const Clouds: React.FC<CloudsProps> = ({
                 continue;
             }
 
-            //const opacity = 0.5 + 0.2 * (Math.random() * 2 - 1);
-            const opacity = 0.8;
+            const baseOpacity = 0.5 + 0.2 * (Math.random() * 2 - 1);
+            const evolutionParams = generateEvolutionParams(i);
+
             newLayers.push({
                 id: Date.now() + i,
                 lat: location.lat,
                 lon: location.lon,
                 url: generateStreetViewURL(location.lat, location.lon),
-                opacity,
+                baseOpacity,
                 loaded: false,
+                ...evolutionParams,
             });
         }
 
@@ -172,6 +214,28 @@ const Clouds: React.FC<CloudsProps> = ({
     };
 
     useEffect(() => {
+        if (!enableEvolution) return;
+
+        const animate = () => {
+            const now = Date.now();
+            const deltaTime = (now - lastFrameTimeRef.current) / 1000;
+            lastFrameTimeRef.current = now;
+
+            setAnimationTime((prev) => prev + deltaTime * evolutionSpeed);
+
+            animationFrameRef.current = requestAnimationFrame(animate);
+        };
+
+        animationFrameRef.current = requestAnimationFrame(animate);
+
+        return () => {
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
+        };
+    }, [enableEvolution, evolutionSpeed]);
+
+    useEffect(() => {
         generateLayers();
     }, []);
 
@@ -184,6 +248,84 @@ const Clouds: React.FC<CloudsProps> = ({
             return () => clearInterval(interval);
         }
     }, [refreshInterval]);
+
+    const getLayerStyle = (layer: CloudLayer): React.CSSProperties => {
+        if (!enableEvolution || !layer.loaded) {
+            return {
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                width: '120%',
+                height: '120%',
+                objectFit: 'cover',
+                opacity: layer.loaded ? layer.baseOpacity : 0,
+                transform: 'translate(-50%, -50%)',
+                transition: 'opacity 2s ease-in-out',
+                mixBlendMode: 'normal',
+            };
+        }
+
+        const t = animationTime + layer.phaseOffset * 100;
+
+        let opacity = layer.baseOpacity;
+        if (opacityModulation) {
+            const opacityWave = Math.sin(
+                t * layer.opacityWaveFrequency * Math.PI * 2,
+            );
+            opacity =
+                layer.baseOpacity + opacityWave * layer.opacityWaveAmplitude;
+            opacity = Math.max(0.05, Math.min(0.95, opacity));
+        }
+
+        let translateX = 0;
+        let translateY = 0;
+        if (driftEnabled) {
+            const driftRangeX = window.innerWidth * 0.05;
+            const driftRangeY = window.innerHeight * 0.05;
+            translateX =
+                ((layer.driftSpeed.x * animationTime) % (driftRangeX * 2)) -
+                driftRangeX;
+            translateY =
+                ((layer.driftSpeed.y * animationTime) % (driftRangeY * 2)) -
+                driftRangeY;
+        }
+
+        const baseScale = 1.4;
+        let scaleModulation_value = 0;
+        if (scaleModulation) {
+            const scaleWave = Math.sin(
+                t * layer.scaleWaveFrequency * Math.PI * 2,
+            );
+            scaleModulation_value = scaleWave * layer.scaleWaveAmplitude;
+        }
+
+        const finalScale = baseScale * (1 + scaleModulation_value);
+
+        let rotation = 0;
+        if (rotationEnabled) {
+            rotation = (layer.rotationSpeed * animationTime) % 360;
+        }
+
+        const transform = `
+            translate(-50%, -50%)
+            translate(${translateX}px, ${translateY}px) 
+            scale(${finalScale}) 
+            rotate(${rotation}deg)
+        `;
+
+        return {
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity,
+            transform,
+            transformOrigin: 'center center',
+            mixBlendMode: 'hard-light',
+        };
+    };
 
     const loadedCount = layers.filter((l) => l.loaded).length;
     const isFullyLoaded = loadedCount === layerCount && !isGenerating;
@@ -234,16 +376,7 @@ const Clouds: React.FC<CloudsProps> = ({
                         )}, ${layer.lon.toFixed(2)}`}
                         onLoad={() => handleImageLoad(layer.id)}
                         onError={() => handleImageError(layer.id)}
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            opacity: layer.loaded ? layer.opacity : 0,
-                            mixBlendMode: 'hard-light',
-                        }}
+                        style={getLayerStyle(layer)}
                     />
                 ))}
             </div>
