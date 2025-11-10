@@ -5,11 +5,13 @@ import LivingWindow from './components/LivingWindow';
 import DegradableWindow from './components/DegradableWindow';
 import FileExplorer from './components/FileExplorer';
 import ImageViewer from './components/ImageViewer';
+import MusicPlayer from './components/MusicPlayer';
 import Clouds from './components/Clouds';
 import './styles/living-window.css';
 import './styles/degradable-window.css';
 import './styles/file-explorer.css';
 import './styles/image-viewer.css';
+import './styles/music-player.css';
 
 interface Project {
     name: string;
@@ -28,6 +30,8 @@ interface DesktopItem {
     path?: string;
     position: { top: string; left: string };
     size?: { width: number; height: number };
+    audioSrc?: string;
+    coverArtUrl?: string;
 }
 
 interface OpenWindow {
@@ -163,6 +167,25 @@ function App() {
     const handleIconDoubleClick = (item: DesktopItem) => {
         if (item.type === 'program' && item.program === 'FileExplorer') {
             setShowFileExplorer(true);
+            return;
+        }
+
+        if (item.type === 'program' && item.program === 'MusicPlayer') {
+            const newWindow: OpenWindow = {
+                id: `${item.id}-${Date.now()}`,
+                title: item.label,
+                content: (
+                    <MusicPlayer
+                        title={item.label}
+                        audioSrc={item.audioSrc}
+                        coverArtUrl={item.coverArtUrl}
+                    />
+                ),
+                position: { x: 250, y: 250 },
+                size: item.size || { width: 300, height: 400 },
+                degradationEnabled: true,
+            };
+            setOpenWindows((prev) => [...prev, newWindow]);
             return;
         }
 

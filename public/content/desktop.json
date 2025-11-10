@@ -16,12 +16,14 @@
         "position": { "top": "380px", "left": "20px" }
     },
     {
-        "id": "image2",
-        "label": "screenshot_1(1).png",
-        "icon": "icons/imagPNG.ico",
-        "type": "image",
-        "path": "/images/screenshot_1.png",
+        "id": "desktop_music1",
+        "label": "demo_1.mp3",
+        "icon": "icons/cd_audio_cd.ico",
+        "type": "program",
+        "program": "MusicPlayer",
         "position": { "top": "440px", "left": "50px" },
-        "size": { "width": "600", "height": "400" }
+        "size": { "width": 300, "height": 400 },
+        "audioSrc": "/music/demo_1.mp3",
+        "coverArtUrl": "/music/demo_1.jpg"
     }
 ]

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import DegradableWindow from './DegradableWindow';
 import ImageViewer from './ImageViewer';
+import MusicPlayer from './MusicPlayer';
 import type { FSNode, FSNodeMap } from '../types/fileSystem';
 
 interface OpenWindow {
@@ -141,6 +142,18 @@ const FileExplorer: React.FC<FileExplorerProps> = ({
                         </p>,
                     );
                 }
+                break;
+            case 'music':
+                openNewWindow(
+                    name,
+                    <MusicPlayer
+                        title={name}
+                        audioSrc={item.audioSrc}
+                        coverArtUrl={item.coverArtUrl}
+                    />,
+                    { width: 300, height: 400 },
+                    true,
+                );
                 break;
         }
     };

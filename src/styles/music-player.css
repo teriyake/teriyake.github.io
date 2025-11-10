@@ -1,0 +1,111 @@
+.music-player {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    height: 100%;
+    box-sizing: border-box;
+    font-family: 'Pixelated MS Sans Serif', sans-serif;
+}
+
+.music-player .cover-art-container {
+    width: 100%;
+    height: 180px;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.music-player .cover-art-container img {
+    max-width: 100%;
+    max-height: 100%;
+    image-rendering: pixelated;
+}
+
+.music-player .static-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
+    pointer-events: none;
+    animation: static-flicker 0.1s infinite alternate;
+}
+
+.music-player .info-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 11px;
+    margin-bottom: 4px;
+}
+
+.music-player .track-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+}
+
+.music-player .time-display {
+    font-family: monospace;
+}
+
+.music-player .progress-bar-container {
+    height: 16px;
+    width: 100%;
+    padding: 2px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.music-player .progress-bar {
+    height: 100%;
+    background: #000080;
+    transition: width 0.1s linear;
+}
+
+.music-player .progress-glitch {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: red;
+    animation: glitch-flicker 0.2s infinite;
+}
+
+@keyframes glitch-flicker {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.music-player .visualizer {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 8px;
+    background: #111;
+}
+
+.music-player .controls {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.music-player .controls p {
+    font-family: monospace;
+    font-size: 11px;
+    color: #808080;
+}
