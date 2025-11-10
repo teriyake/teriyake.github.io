@@ -216,6 +216,25 @@ function App() {
         setOpenWindows((prev) => prev.filter((win) => win.id !== id));
     };
 
+    const handleSkyCapture = (imageDataUrl: string) => {
+        const newMemoryItem: DesktopItem = {
+            id: `memory-${Date.now()}`,
+            label: `memory_${Math.floor(Date.now() / 1000)}.png`,
+            icon: imageDataUrl,
+            type: 'image',
+            path: imageDataUrl,
+            position: {
+                top: `${100 + Math.random() * (window.innerHeight - 400)}px`,
+                left: `${100 + Math.random() * (window.innerWidth - 300)}px`,
+            },
+            size: { width: 600, height: 450 },
+        };
+
+        setDesktopItems((prevItems) => [...prevItems, newMemoryItem]);
+
+        handleCloseRealWindow();
+    };
+
     useEffect(() => {
         if (window.innerWidth <= 600) {
             setShowMobileError(true);
@@ -858,6 +877,7 @@ function App() {
                         apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
                         layerCount={5}
                         refreshInterval={300000}
+                        onCapture={handleSkyCapture}
                     />
                 </Window>
             )}
