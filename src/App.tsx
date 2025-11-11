@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Window from './components/Window';
 import EvasiveWindow from './components/EvasiveWindow';
 import LivingWindow from './components/LivingWindow';
@@ -9,6 +9,10 @@ import MusicPlayer from './components/MusicPlayer';
 import Clouds from './components/Clouds';
 import { SkyGallery } from './components/SkyGallery';
 import type { SkyCapture } from './supabaseClient';
+import PhysicsIcon from './components/PhysicsIcon';
+import type { PhysicsObject } from './hooks/usePhysicsEngine';
+import { usePhysicsEngine } from './hooks/usePhysicsEngine';
+import { useSkyCaptureGallery } from './hooks/useSkyCaptureGallery';
 import './styles/living-window.css';
 import './styles/degradable-window.css';
 import './styles/file-explorer.css';
@@ -127,6 +131,12 @@ function App() {
         top: 300,
         left: 200,
     });
+    const [skyMemoryIcons, setSkyMemoryIcons] = useState<PhysicsObject[]>([]);
+    const [initialIconsLoaded, setInitialIconsLoaded] = useState(false);
+
+    const physicsContainerRef = useRef<HTMLDivElement>(null);
+    const physicsBodies = usePhysicsEngine(physicsContainerRef, skyMemoryIcons);
+    const { recentCaptures, loadRecentCaptures } = useSkyCaptureGallery();
 
     const handleAboutCancel = () => {
         setShowAreYouSure(true);
@@ -226,22 +236,48 @@ function App() {
     };
 
     const handleSkyCapture = (imageDataUrl: string) => {
-        const newMemoryItem: DesktopItem = {
+        const newMemory: PhysicsObject = {
             id: `memory-${Date.now()}`,
             label: `memory_${Math.floor(Date.now() / 1000)}.png`,
-            icon: imageDataUrl,
-            type: 'image',
-            path: imageDataUrl,
-            position: {
-                top: `${100 + Math.random() * (window.innerHeight - 400)}px`,
-                left: `${100 + Math.random() * (window.innerWidth - 300)}px`,
-            },
-            size: { width: 600, height: 450 },
+            imageUrl: imageDataUrl,
+            width: 80,
+            height: 50,
         };
 
-        setDesktopItems((prevItems) => [...prevItems, newMemoryItem]);
+        setSkyMemoryIcons((prev) => [...prev, newMemory]);
+
+        const newDesktopItem: DesktopItem = {
+            id: newMemory.id,
+            label: newMemory.label,
+            icon: newMemory.imageUrl,
+            type: 'image',
+            path: newMemory.imageUrl,
+            position: { top: '0', left: '0' },
+            size: { width: 600, height: 450 },
+        };
+        setDesktopItems((prev) => [...prev, newDesktopItem]);
 
         handleCloseRealWindow();
+    };
+
+    const openImageViewerForIcon = (iconId: string) => {
+        const item = desktopItems.find((d) => d.id === iconId);
+        if (item && item.type === 'image' && item.path) {
+            const newWindow: OpenWindow = {
+                id: `${item.id}-${Date.now()}`,
+                title: item.label,
+                content: (
+                    <ImageViewer imageUrl={item.path} imageName={item.label} />
+                ),
+                position: {
+                    x: Math.random() * 200 + 100,
+                    y: Math.random() * 200 + 100,
+                },
+                size: item.size || { width: 400, height: 300 },
+                degradationEnabled: false,
+            };
+            setOpenWindows((prev) => [...prev, newWindow]);
+        }
     };
 
     useEffect(() => {
@@ -265,7 +301,34 @@ function App() {
                 setProjects(sortedData);
             })
             .catch((err) => console.error('Failed to load projects:', err));
-    }, []);
+        loadRecentCaptures(20);
+    }, [loadRecentCaptures]);
+
+    useEffect(() => {
+        if (recentCaptures.length > 0 && !initialIconsLoaded) {
+            const loadedPhysicsIcons = recentCaptures.map((capture) => ({
+                id: capture.id,
+                label: `sky_memory_${capture.created_at}.png`,
+                imageUrl: capture.image_url,
+                width: 80,
+                height: 50,
+            }));
+
+            const loadedDesktopItems = recentCaptures.map((capture) => ({
+                id: capture.id,
+                label: `sky_memory_${capture.created_at}.png`,
+                icon: capture.image_url,
+                type: 'image' as const,
+                path: capture.image_url,
+                position: { top: '0', left: '0' },
+                size: { width: 600, height: 450 },
+            }));
+
+            setSkyMemoryIcons((prev) => [...prev, ...loadedPhysicsIcons]);
+            setDesktopItems((prev) => [...prev, ...loadedDesktopItems]);
+            setInitialIconsLoaded(true);
+        }
+    }, [recentCaptures, initialIconsLoaded]);
 
     useEffect(() => {
         let timeoutId: number;
@@ -332,16 +395,43 @@ function App() {
     }
 
     return (
-        <>
-            {desktopItems.map((item) => (
-                <DesktopIcon
-                    key={item.id}
-                    icon={item.icon}
-                    label={item.label}
-                    onDoubleClick={() => handleIconDoubleClick(item)}
-                    style={item.position}
-                />
-            ))}
+        <div
+            ref={physicsContainerRef}
+            style={{ width: '100vw', height: '100vh', position: 'relative' }}
+        >
+            {desktopItems
+                .filter((item) => !skyMemoryIcons.some((p) => p.id === item.id))
+                .map((item) => (
+                    <DesktopIcon
+                        key={item.id}
+                        icon={item.icon}
+                        label={item.label}
+                        onDoubleClick={() => handleIconDoubleClick(item)}
+                        style={item.position}
+                    />
+                ))}
+
+            {physicsBodies.map((body) => {
+                const iconData = skyMemoryIcons.find(
+                    (icon) => icon.id === body.label,
+                );
+                if (!iconData) return null;
+
+                return (
+                    <PhysicsIcon
+                        key={iconData.id}
+                        label={iconData.label}
+                        imageUrl={iconData.imageUrl}
+                        position={body.position}
+                        angle={body.angle}
+                        width={iconData.width}
+                        height={iconData.height}
+                        onDoubleClick={() =>
+                            openImageViewerForIcon(iconData.id)
+                        }
+                    />
+                );
+            })}
 
             {openWindows.map((win) => (
                 <DegradableWindow
@@ -962,7 +1052,7 @@ function App() {
                     <p className="status-bar-field">CPU Usage: ??%</p>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 
