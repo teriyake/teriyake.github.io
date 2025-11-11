@@ -50,7 +50,7 @@ export const SkyGallery: React.FC<SkyGalleryProps> = ({ onSelectCapture }) => {
                     Random Sky
                 </button>
                 <span style={{ marginLeft: 'auto', fontSize: '12px' }}>
-                    {totalCount} {totalCount === 1 ? 'sky' : 'skies'} captured
+                    {totalCount} {totalCount === 1 ? 'sky' : 'skies'} captured by www friends
                 </span>
             </div>
 

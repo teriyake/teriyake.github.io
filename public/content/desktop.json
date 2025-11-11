@@ -40,6 +40,6 @@
         "icon": "icons/memory.ico",
         "type": "program",
         "program": "SkyGallery",
-        "position": { "top": "400px", "left": "80px" }
+        "position": { "top": "270px", "left": "180px" }
     }
 ]
