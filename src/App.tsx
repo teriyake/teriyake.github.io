@@ -7,6 +7,8 @@ import FileExplorer from './components/FileExplorer';
 import ImageViewer from './components/ImageViewer';
 import MusicPlayer from './components/MusicPlayer';
 import Clouds from './components/Clouds';
+import { SkyGallery } from './components/SkyGallery';
+import type { SkyCapture } from './supabaseClient';
 import './styles/living-window.css';
 import './styles/degradable-window.css';
 import './styles/file-explorer.css';
@@ -117,7 +119,9 @@ function App() {
     const [showRealWindow, setShowRealWindow] = useState(false);
     const [showFileExplorer, setShowFileExplorer] = useState(false);
     const [projects, setProjects] = useState<Project[]>([]);
-
+    const [showGallery, setShowGallery] = useState(false);
+    const [_selectedGalleryCapture, setSelectedGalleryCapture] =
+        useState<SkyCapture | null>(null);
     const [movingWindowState, setMovingWindowState] = useState({
         visible: true,
         top: 300,
@@ -172,6 +176,11 @@ function App() {
 
         if (item.type === 'program' && item.program === 'Clouds') {
             setShowRealWindow(true);
+            return;
+        }
+
+        if (item.type === 'program' && item.program === 'SkyGallery') {
+            setShowGallery(true);
             return;
         }
 
@@ -880,6 +889,36 @@ function App() {
                         onCapture={handleSkyCapture}
                     />
                 </Window>
+            )}
+
+            {showGallery && (
+                <DegradableWindow
+                    title="Sky Memories"
+                    initialPosition={{
+                        x: 50,
+                        y: 20,
+                    }}
+                    initialSize={{ width: 500, height: 400 }}
+                    degradationEnabled={false}
+                    elasticResize={true}
+                    titleBarControls={
+                        <>
+                            <button aria-label="Minimize"></button>
+                            <button aria-label="Maximize"></button>
+                            <button
+                                id="projects-close"
+                                aria-label="Close"
+                                onClick={() => setShowGallery(false)}
+                            ></button>
+                        </>
+                    }
+                >
+                    <SkyGallery
+                        onSelectCapture={(capture) => {
+                            setSelectedGalleryCapture(capture);
+                        }}
+                    />
+                </DegradableWindow>
             )}
 
             <div

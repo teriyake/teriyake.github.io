@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSkyCaptureUpload } from '../hooks/useSkyCaptureGallery';
 
 interface CloudLayer {
     id: number;
@@ -52,6 +53,8 @@ const Clouds: React.FC<CloudsProps> = ({
     const [showCaptureDialog, setShowCaptureDialog] = useState(false);
 
     const canvasRef = useRef<HTMLDivElement>(null);
+
+    const { upload, isUploading, uploadError } = useSkyCaptureUpload();
 
     const animationFrameRef = useRef<number>(0);
     const lastFrameTimeRef = useRef<number>(Date.now());
@@ -327,8 +330,28 @@ const Clouds: React.FC<CloudsProps> = ({
         }
     };
 
-    const handleSaveToOS = () => {
-        if (capturedImage) {
+    const handleSaveToOS = async () => {
+        if (!capturedImage) return;
+
+        try {
+            const imageUrl = await upload(capturedImage, {
+                layerCount: layers.length,
+                sourceCoordinates: layers.map((layer) => ({
+                    lat: layer.lat,
+                    lon: layer.lon,
+                })),
+            });
+
+            console.log('Successfully uploaded to Supabase:', imageUrl);
+            onCapture(capturedImage);
+            setShowCaptureDialog(false);
+            setCapturedImage(null);
+        } catch (error) {
+            console.error('Error saving capture:', error);
+            alert(
+                'Failed to save capture to the gallery. The image is still saved locally on your desktop.',
+            );
+
             onCapture(capturedImage);
             setShowCaptureDialog(false);
             setCapturedImage(null);
@@ -483,19 +506,19 @@ const Clouds: React.FC<CloudsProps> = ({
                 )}
             </div>
 
-            {showCaptureDialog && capturedImage && (
+            {showCaptureDialog && (
                 <div
                     style={{
-                        position: 'absolute',
+                        position: 'fixed',
                         top: 0,
                         left: 0,
                         right: 0,
                         bottom: 0,
                         backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        zIndex: 100,
                         display: 'flex',
-                        alignItems: 'center',
                         justifyContent: 'center',
+                        alignItems: 'center',
+                        zIndex: 10000,
                     }}
                 >
                     <div className="window" style={{ width: '400px' }}>
@@ -505,38 +528,76 @@ const Clouds: React.FC<CloudsProps> = ({
                             </div>
                         </div>
                         <div className="window-body">
-                            <p
-                                style={{
-                                    textAlign: 'center',
-                                    marginBottom: '10px',
-                                }}
-                            >
-                                What would you like to do with this memory?
-                            </p>
+                            <p>What would you like to do with this memory?</p>
+
+                            {isUploading && (
+                                <div
+                                    className="status-bar"
+                                    style={{ marginBottom: '10px' }}
+                                >
+                                    <p className="status-bar-field">
+                                        Uploading to gallery...
+                                    </p>
+                                </div>
+                            )}
+
+                            {uploadError && (
+                                <div
+                                    className="status-bar"
+                                    style={{ marginBottom: '10px' }}
+                                >
+                                    <p
+                                        className="status-bar-field"
+                                        style={{ color: 'red' }}
+                                    >
+                                        Upload error: {uploadError}
+                                    </p>
+                                </div>
+                            )}
+
                             <div
-                                className="sunken-panel"
-                                style={{ padding: '5px', marginBottom: '10px' }}
-                            >
-                                <img
-                                    src={capturedImage}
-                                    style={{ width: '100%', display: 'block' }}
-                                    alt="Captured Sky"
-                                />
-                            </div>
-                            <section
                                 className="field-row"
-                                style={{ justifyContent: 'center', gap: '5px' }}
+                                style={{ marginTop: '10px' }}
                             >
-                                <button onClick={handleSaveToOS}>
-                                    Save to Desktop
+                                <button
+                                    onClick={handleSaveToOS}
+                                    disabled={isUploading}
+                                >
+                                    {isUploading
+                                        ? 'Uploading...'
+                                        : 'Post to Website'}
                                 </button>
-                                <button onClick={handleDownload}>
-                                    Download
+                                <button
+                                    onClick={handleDownload}
+                                    disabled={isUploading}
+                                >
+                                    Download Locally
                                 </button>
-                                <button onClick={handleCancelCapture}>
+                                <button
+                                    onClick={handleCancelCapture}
+                                    disabled={isUploading}
+                                >
                                     Cancel
                                 </button>
-                            </section>
+                            </div>
+
+                            {capturedImage && (
+                                <div
+                                    style={{
+                                        marginTop: '10px',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    <img
+                                        src={capturedImage}
+                                        alt="Captured sky preview"
+                                        style={{
+                                            maxWidth: '100%',
+                                            border: '1px solid #000',
+                                        }}
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
