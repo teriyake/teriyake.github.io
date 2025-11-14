@@ -6,10 +6,37 @@
             "type": "folder",
             "icon": "directory_control_panel",
             "content": {
-                "screenshot_1.PNG": {
-                    "type": "file",
-                    "icon": "imagPNG",
-                    "contentPath": "/images/screenshot_1.png"
+                "i-try-to-forget": {
+                    "type": "folder",
+                    "icon": "erase_file",
+                    "content": {
+                        "README.txt": {
+                            "type": "file",
+                            "icon": "file_lines",
+                            "contentPath": "/content/projects/i_try_to_forget/README.md"
+                        },
+                        "i_try_to_forget.src": {
+                            "type": "link",
+                            "icon": "executable",
+                            "url": "https://github.com/teriyake/i_try_to_forget"
+                        },
+                        "screenshots": {
+                            "type": "folder",
+                            "icon": "directory_pictures",
+                            "content": {
+                                "in_action.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/i_try_to_forget/screenshot_2.png"
+                                },
+                                "ui.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/i_try_to_forget/screenshot_1.png"
+                                }
+                            }
+                        }
+                    }
                 },
                 "satellite": {
                     "type": "folder",
@@ -18,7 +45,7 @@
                         "satellite_artists_statement.txt": {
                             "type": "file",
                             "icon": "file_lines",
-                            "contentPath": "/content/projects/satellite_artists_statement.md"
+                            "contentPath": "/content/projects/satellite/satellite_artists_statement.md"
                         },
                         "satellite.link": {
                             "type": "link",
@@ -27,9 +54,9 @@
                         }
                     }
                 },
-                "nonplace.link": {
+                "nonplace.src": {
                     "type": "link",
-                    "icon": "html",
+                    "icon": "executable",
                     "url": "https://github.com/teriyake/nonplace"
                 },
                 "this_website.src": {

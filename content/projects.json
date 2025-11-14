@@ -1,5 +1,12 @@
 [
     {
+        "name": "i try to forget",
+        "type": "Experiment/Software/Art",
+        "lastUpdated": "11/14/2025",
+        "description": "A browser plugin that evokes apparitions",
+        "url": "https://github.com/teriyake/i_try_to_forget/"
+    },
+    {
         "name": "Solar Wind Music",
         "type": "Music/Software/Experiment",
         "lastUpdated": "09/23/2022",
