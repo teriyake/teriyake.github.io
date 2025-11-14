@@ -38,7 +38,7 @@
                         }
                     }
                 },
-                "satellite": {
+                "Satellite": {
                     "type": "folder",
                     "icon": "channels",
                     "content": {
@@ -54,10 +54,173 @@
                         }
                     }
                 },
-                "nonplace.src": {
-                    "type": "link",
-                    "icon": "executable",
-                    "url": "https://github.com/teriyake/nonplace"
+                "Telepath": {
+                    "type": "folder",
+                    "icon": "network_televisions",
+                    "content": {
+                        "README.txt": {
+                            "type": "file",
+                            "icon": "file_lines",
+                            "contentPath": "/content/projects/telepath/README.md"
+                        },
+                        "Telepath_Unity.src": {
+                            "type": "link",
+                            "icon": "executable",
+                            "url": "https://github.com/teriyake/Telepath_Unity"
+                        },
+                        "Telepath_VCVRack.src": {
+                            "type": "link",
+                            "icon": "executable",
+                            "url": "https://github.com/teriyake/Telepath_VCVRack"
+                        },
+                        "telepathic_improvisation.txt": {
+                            "type": "file",
+                            "icon": "file_lines",
+                            "contentPath": "/content/projects/telepath/telepathic_improvisation.md"
+                        },
+                        "images": {
+                            "type": "folder",
+                            "icon": "directory_pictures",
+                            "content": {
+                                "vcvrack_modules.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/telepath/vcvrack_modules.png"
+                                }
+                            }
+                        }
+                    }
+                },
+                "Jacquard": {
+                    "type": "folder",
+                    "icon": "paint_window",
+                    "content": {
+                        "README.txt": {
+                            "type": "file",
+                            "icon": "file_lines",
+                            "contentPath": "/content/projects/jacquard/README.md"
+                        },
+                        "Jacquard.src": {
+                            "type": "link",
+                            "icon": "executable",
+                            "url": "https://github.com/teriyake/Jacquard"
+                        },
+                        "demos": {
+                            "type": "folder",
+                            "icon": "directory_pictures",
+                            "content": {
+                                "herringbone.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/jacquard/herringbone.png"
+                                },
+                                "rosepath.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/jacquard/rosepath.png"
+                                },
+                                "point_twill.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/jacquard/point_twill.png"
+                                },
+                                "birds_eye.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/jacquard/birds_eye.png"
+                                }
+                            }
+                        }
+                    }
+                },
+                "0x502": {
+                    "type": "folder",
+                    "icon": "keyboard_musical_midi",
+                    "content": {
+                        "README.txt": {
+                            "type": "file",
+                            "icon": "file_lines",
+                            "contentPath": "/content/projects/0x502/README.md"
+                        },
+                        "0x502.src": {
+                            "type": "link",
+                            "icon": "executable",
+                            "url": "https://github.com/teriyake/0x502"
+                        },
+                        "images": {
+                            "type": "folder",
+                            "icon": "directory_pictures",
+                            "content": {
+                                "GLIB.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/0x502/glib.png"
+                                },
+                                "GLCV.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/0x502/glcv.png"
+                                },
+                                "GLAZE.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/0x502/glaze.png"
+                                },
+                                "GLAB.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/0x502/glab.png"
+                                },
+                                "Canvas.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/0x502/canvas.png"
+                                }
+                            }
+                        }
+                    }
+                },
+                "nonplace": {
+                    "type": "folder",
+                    "icon": "globe_map",
+                    "content": {
+                        "README.txt": {
+                            "type": "file",
+                            "icon": "file_lines",
+                            "contentPath": "/content/projects/nonplace/README.md"
+                        },
+                        "nonplace.src": {
+                            "type": "link",
+                            "icon": "executable",
+                            "url": "https://github.com/teriyake/nonplace"
+                        },
+                        "nonplace.link": {
+                            "type": "link",
+                            "icon": "html",
+                            "url": "https://nonplace.vercel.app"
+                        },
+                        "demos": {
+                            "type": "folder",
+                            "icon": "directory_pictures",
+                            "content": {
+                                "1.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/nonplace/1.png"
+                                },
+                                "2.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/nonplace/2.png"
+                                },
+                                "3.png": {
+                                    "type": "file",
+                                    "icon": "imagPNG",
+                                    "contentPath": "/content/projects/nonplace/3.png"
+                                }
+                            }
+                        }
+                    }
                 },
                 "this_website.src": {
                     "type": "program",
